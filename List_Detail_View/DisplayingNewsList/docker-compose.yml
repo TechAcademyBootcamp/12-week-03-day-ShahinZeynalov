@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+
+  postgres:
+    container_name: pg_food-stories
+    image: postgres:12.1
+    environment:
+      POSTGRES_USER: 'murad'
+      POSTGRES_PASSWORD: '1'
+      POSTGRES_DB: 'validate_db'
+    volumes:
+      - ./.postgresdb/:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: on-failure
+
+
+  pgadmin:
+    container_name: pgadmin_food-stories
+    image: dpage/pgadmin4:4.16
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "shahin.zeynalov95@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: '12345'
+    volumes:
+      - ./.pgadmin:/root/.pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: on-failure
+
+networks:
+  postgres:
+    driver: bridge
+volumes:
+    postgres:
+    pgadmin:
